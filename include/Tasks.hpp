@@ -35,55 +35,55 @@ namespace fablabbg::Tasks
     Task &operator=(Task &&other) = default;
 
     /// @brief Execute the task if active
-    void run();
+    auto run() -> void;
 
     /// @brief  Prevent the task from running again
-    void stop();
+    auto stop() -> void;
 
     /// @brief Allows the task to run again
-    void start();
+    auto start() -> void;
 
     /// @brief recompute the next run time (now + delay) and allows the task to run again
-    void restart();
+    auto restart() -> void;
 
     /// @brief Change the task period
     /// @param new_period new period. Use 0ms for single shot.
-    void setPeriod(milliseconds new_period);
+    auto setPeriod(milliseconds new_period) -> void;
 
     /// @brief Change the task initial delay
     /// @param new_delay Initial delay. Use 0s to avoid any initial delay.
-    void setDelay(milliseconds new_delay);
+    auto setDelay(milliseconds new_delay) -> void;
 
     /// @brief Change the callback function
     /// @param new_callback function to be called back
-    void setCallback(std::function<void()> new_callback);
+    auto setCallback(std::function<void()> new_callback) -> void;
 
     /// @brief Status of the task
     /// @return True if Scheduler can launch it
-    bool isActive() const;
+    auto isActive() const -> bool;
 
     /// @brief Current period of the task
-    [[nodiscard]] milliseconds getPeriod() const;
+    [[nodiscard]] auto getPeriod() const -> milliseconds;
 
-    [[nodiscard]] std::function<void()> getCallback() const;
+    [[nodiscard]] auto getCallback() const -> std::function<void()>;
 
     /// @brief Get the Task Identifier
-    [[nodiscard]] std::string getId() const;
+    [[nodiscard]] auto getId() const -> std::string;
 
-    [[nodiscard]] milliseconds getDelay() const;
+    [[nodiscard]] auto getDelay() const -> milliseconds;
 
     /// @brief Get the average tardiness, i.e. the average period between scheduled start and actual start of execution.
-    [[nodiscard]] milliseconds getAvgTardiness() const;
+    [[nodiscard]] auto getAvgTardiness() const -> milliseconds;
 
     /// @brief Gets the number of times the task has been run.
-    [[nodiscard]] unsigned long getRunCounter() const;
+    [[nodiscard]] auto getRunCounter() const -> unsigned long;
 
     /// @brief Gets the total execution time of the task. Useful to spot slowest tasks
-    [[nodiscard]] milliseconds getTotalRuntime() const;
+    [[nodiscard]] auto getTotalRuntime() const -> milliseconds;
 
     /// @brief When shall the task be run again
     /// @return time_point of the next run or time_point::max() if the task will not run.
-    [[nodiscard]] time_point_sc getNextRun() const;
+    [[nodiscard]] auto getNextRun() const -> time_point_sc;
 
   private:
     bool active;
@@ -104,26 +104,26 @@ namespace fablabbg::Tasks
     Scheduler() noexcept;
     ~Scheduler() = default;
 
-    void addTask(Task &task);
-    void removeTask(Task &task);
+    auto addTask(Task &task) -> void;
+    auto removeTask(Task &task) -> void;
 
     /// @brief Execute all tasks that are ready to run
     /// @details Tasks will be ordered by next_run time ascending, then run sequentially
-    void execute() const;
+    auto execute() const -> void;
 
     /// @brief Recompute all the next run times for all the tasks
-    void restart() const;
+    auto restart() const -> void;
 
     /// @brief Gets the number of tasks in the scheduler
-    size_t taskCount() const;
+    auto taskCount() const -> size_t;
 
     /// @brief Get a vector of references to the tasks
-    const std::vector<std::reference_wrapper<Task>> getTasks() const;
+    auto getTasks() const -> const std::vector<std::reference_wrapper<Task>>;
 
   private:
     std::vector<std::reference_wrapper<Task>> tasks; // Vector containing references to the tasks, not the tasks themselves
 
-    void printStats() const;
+    auto printStats() const -> void;
   };
 
   void task_delay(const milliseconds delay);

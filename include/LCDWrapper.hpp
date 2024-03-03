@@ -22,7 +22,6 @@ namespace fablabbg
     void showConnection(bool show) override;
     void showPower(bool show) override;
     void setRow(uint8_t row, const std::string &text) override;
-    [[nodiscard]] std::string convertSecondsToHHMMSS(std::chrono::seconds duration) const;
 
     void update(const BoardInfo &boardinfo, bool forced = false) override;
 
@@ -55,7 +54,7 @@ namespace fablabbg
     void backlightOn() const;
     void backlightOff() const;
     void prettyPrint(const DisplayBuffer &buffer, const BoardInfo &bi) const;
-    [[nodiscard]] bool needsUpdate(const BoardInfo &bi) const;
+    [[nodiscard]] auto needsUpdate(const BoardInfo &bi) const -> bool;
     void createChar(uint8_t char_idx, const std::array<uint8_t, HEIGHT_PX> &values);
   };
 } // namespace fablabbg

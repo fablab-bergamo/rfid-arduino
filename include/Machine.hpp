@@ -30,70 +30,71 @@ namespace fablabbg
     Machine(Machine &&) = delete;                  // move constructor
     Machine &operator=(Machine &&) = delete;       // move assignment
 
-    FabUser getActiveUser() const;
+    auto getActiveUser() const -> FabUser;
 
     /// @brief Configure the machine, it must be called before most methods.
     void configure(const MachineConfig &new_config, FabBackend &serv);
 
-    [[nodiscard]] MachineID getMachineId() const;
-    [[nodiscard]] std::string getMachineName() const;
+    [[nodiscard]] auto getMachineId() const -> MachineID;
+    [[nodiscard]] auto getMachineName() const -> std::string;
 
     /// @brief Duration of the current usage, or 0s
-    [[nodiscard]] std::chrono::seconds getUsageDuration() const;
+    [[nodiscard]] auto getUsageDuration() const -> std::chrono::seconds;
 
-    [[nodiscard]] std::chrono::seconds getAutologoffDelay() const;
+    [[nodiscard]] auto getAutologoffDelay() const -> std::chrono::seconds;
 
-    [[nodiscard]] std::chrono::seconds getGracePeriod() const;
+    [[nodiscard]] auto getGracePeriod() const -> std::chrono::seconds;
 
     /// @brief Try to login the user and start the usage timer
-    bool login(FabUser user);
+    auto login(const FabUser &user) -> bool;
 
     /// @brief Logoff the user and stop the usage timer
-    void logout();
+    auto logout() -> void;
 
     /// @brief Sets the delay after which the user will be logged off automatically
-    void setAutologoffDelay(std::chrono::seconds new_delay);
+    auto setAutologoffDelay(std::chrono::seconds new_delay) -> void;
 
     /// @brief Sets the idle period after which the machine will power off automatically
-    void setGracePeriod(std::chrono::seconds new_delay);
+    auto setGracePeriod(std::chrono::seconds new_delay) -> void;
 
     /// @brief Powers the machine on or off using relay/MQTT/both
     /// @param on_or_off new power state
-    void power(bool on_or_off);
+    auto power(bool on_or_off) -> void;
 
     /// @brief Sets the machine name as per backend configuration
     /// @param new_name Will be shown on LCD, keep it short.
-    void setMachineName(const std::string &new_name);
+    auto setMachineName(const std::string &new_name) -> void;
 
     /// @brief Sets the machine type as per backend configuration
-    void setMachineType(MachineType new_type);
+    auto setMachineType(MachineType new_type) -> void;
 
     /// @brief Returns the current power state of the machine
-    [[nodiscard]] PowerState getPowerState() const;
+    [[nodiscard]] auto getPowerState() const -> PowerState;
 
     /// @brief Indicates if the machine will power down in less than BEEP_REMAINING_MINUTES
-    [[nodiscard]] bool isShutdownImminent() const;
+    [[nodiscard]] auto isShutdownImminent() const -> bool;
 
     /// @brief Indicates is the machine is not used by anybody
-    [[nodiscard]] bool isFree() const;
+    [[nodiscard]] auto isFree() const -> bool;
 
     /// @brief Indicates if POWEROFF_DELAY_MINUTES delay has expired,and the machine is still idle
-    [[nodiscard]] bool canPowerOff() const;
-    std::string toString() const;
+    [[nodiscard]] auto canPowerOff() const -> bool;
+
+    [[nodiscard]] auto toString() const -> std::string;
 
     /// @brief Indicates ff the user shall be logged off automatically
-    [[nodiscard]] bool isAutologoffExpired() const;
+    [[nodiscard]] auto isAutologoffExpired() const -> bool;
 
     /// @brief Indicates if the machine has been configured
-    [[nodiscard]] bool isConfigured() const;
+    [[nodiscard]] auto isConfigured() const -> bool;
 
     /// @brief Returns the current configuration of the machine, used for testing.
-    [[nodiscard]] std::optional<MachineConfig> getConfig() const;
+    [[nodiscard]] auto getConfig() const -> std::optional<MachineConfig>;
 
-    bool isAllowed() const;
-    void setAllowed(bool new_allowed);
-    bool isMaintenanceNeeded() const;
-    void setMaintenanceNeeded(bool new_maintenance_needed);
+    auto isAllowed() const -> bool;
+    auto setAllowed(bool new_allowed) -> void;
+    auto isMaintenanceNeeded() const -> bool;
+    auto setMaintenanceNeeded(bool new_maintenance_needed) -> void;
 
   private:
     std::optional<MachineConfig> config{std::nullopt};
@@ -111,8 +112,8 @@ namespace fablabbg
     /// @brief If true, machine is allowed to be used by anybody
     bool allowed{true};
 
-    void power_mqtt(bool on_or_off);
-    void power_relay(bool on_or_off);
+    auto power_mqtt(bool on_or_off) -> void;
+    auto power_relay(bool on_or_off) -> void;
   };
 } // namespace fablabbg
 #endif // MACHINE_HPP_

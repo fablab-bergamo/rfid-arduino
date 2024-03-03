@@ -17,16 +17,18 @@ namespace fablabbg
     MockMQTTBroker() noexcept : isLocked{false} {};
     ~MockMQTTBroker() = default;
 
-    bool isRunning() const;
-    void start();
-    bool onEvent(sMQTTEvent *event) override;
-    const std::string defaultReplies(const std::string &query) const;
+    auto isRunning() const -> bool;
+    auto start() -> void;
+    auto onEvent(sMQTTEvent *event) -> bool override;
+    auto defaultReplies(const std::string &query) const -> const std::string;
+
     /// @brief set the reply generation function. May be called from a different thread
     /// @param callback
-    void configureReplies(std::function<const std::string(const std::string &, const std::string &)> callback);
-    size_t processQueries();
+    auto configureReplies(std::function<const std::string(const std::string &, const std::string &)> callback) -> void;
 
-    void mainLoop();
+    auto processQueries() -> size_t;
+
+    auto mainLoop() -> void;
 
   private:
     std::atomic<bool> is_running{false};
@@ -45,8 +47,8 @@ namespace fablabbg
 
     std::atomic<bool> isLocked;
 
-    bool lock() { return !isLocked.exchange(true); }
-    void unlock() { isLocked = false; }
+    auto lock() -> bool { return !isLocked.exchange(true); }
+    auto unlock() -> void { isLocked = false; }
   };
 } // namespace fablabbg
 #endif // MOCK_MOCKMQTTBROKER_HPP_

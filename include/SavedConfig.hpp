@@ -43,20 +43,21 @@ namespace fablabbg
     /// @brief Machine ID connected to the board
     char machine_id[INT_LENGTH]{0};
 
+    /// @brief Allow compiler-time construction
+    constexpr SavedConfig() = default;
+
     /// @brief Saves the configuration to EEPROM
     /// @return true if successful
-    bool SaveToEEPROM() const;
+    auto SaveToEEPROM() const -> bool;
 
-    std::string toString() const;
-
-    constexpr SavedConfig() = default;
+    [[nodiscard]] auto toString() const -> std::string;
 
     /// @brief Loads the configuration from EEPROM if available and matching revision number
     /// @return std::nullopt if not valid, SavedConfig otherwise
-    [[nodiscard]] static std::optional<SavedConfig> LoadFromEEPROM();
+    [[nodiscard]] static auto LoadFromEEPROM() -> std::optional<SavedConfig>;
 
     /// @brief Returns the default configuration built from conf.hpp and secrets.hpp
-    [[nodiscard]] static SavedConfig DefaultConfig();
+    [[nodiscard]] static auto DefaultConfig() -> SavedConfig;
   };
   // NOLINTEND(cppcoreguidelines-avoid-c-arrays)
 

@@ -19,13 +19,13 @@ namespace fablabbg
     WhiteList whitelist;
     mutable std::list<FabUser> cache;
     void add_in_cache(card::uid_t uid, const std::string &name, FabUser::UserLevel level) const;
-    [[nodiscard]] std::optional<FabUser> is_in_cache(card::uid_t uid) const;
-    [[nodiscard]] std::optional<WhiteListEntry> WhiteListLookup(card::uid_t uid) const;
+    [[nodiscard]] auto is_in_cache(card::uid_t uid) const -> std::optional<FabUser>;
+    [[nodiscard]] auto WhiteListLookup(card::uid_t uid) const -> std::optional<WhiteListEntry>;
 
   public:
     AuthProvider() = delete;
     AuthProvider(WhiteList whitelist);
-    [[nodiscard]] std::optional<FabUser> tryLogin(card::uid_t uid, FabBackend &server) const;
+    [[nodiscard]] auto tryLogin(card::uid_t uid, FabBackend &server) const -> std::optional<FabUser>;
     void setWhitelist(WhiteList list);
   };
 } // namespace fablabbg

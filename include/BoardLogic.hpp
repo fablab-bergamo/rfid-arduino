@@ -50,33 +50,33 @@ namespace fablabbg
 
     BoardLogic() = default;
 
-    Status getStatus() const;
+    auto getStatus() const -> Status;
 
     void refreshFromServer();
     void onNewCard(card::uid_t uid);
     void logout();
-    [[nodiscard]] bool authorize(const card::uid_t uid);
+    [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
     void changeStatus(Status newStatus);
-    bool board_init();
+    auto board_init() -> bool;
     void updateLCD() const;
     void beep_ok() const;
     void beep_failed() const;
 
-    bool configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd);
+    auto configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd) -> bool;
 
     void blinkLed(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0);
     void checkRfid();
     void checkPowerOff();
     void setAutologoffDelay(std::chrono::seconds delay);
     void setWhitelist(WhiteList whitelist);
-    [[nodiscard]] FabBackend &getServer();
-    bool reconfigure();
+    [[nodiscard]] auto getServer() -> FabBackend &;
+    auto reconfigure() -> bool;
 
-    [[nodiscard]] Machine &getMachineForTesting();
-    [[nodiscard]] const Machine &getMachine() const;
+    [[nodiscard]] auto getMachineForTesting() -> Machine &;
+    [[nodiscard]] auto getMachine() const -> const Machine &;
 
     void setRebootRequest(bool request);
-    bool getRebootRequest() const;
+    auto getRebootRequest() const -> bool;
 
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;
@@ -104,7 +104,7 @@ namespace fablabbg
 
     bool rebootRequest{false};
 
-    bool longTap(const card::uid_t card, const std::string &short_prompt) const;
+    auto longTap(const card::uid_t card, const std::string &short_prompt) const -> bool;
   };
 } // namespace fablabbg
 #endif // BOARDLOGIC_HPP_

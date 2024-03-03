@@ -12,13 +12,15 @@ namespace fablabbg
   {
   public:
     virtual ~BaseLCDWrapper() = default;
-    virtual bool begin() = 0;
-    virtual void clear() = 0;
-    virtual void showConnection(bool show) = 0;
-    virtual void showPower(bool show) = 0;
-    virtual void setRow(uint8_t row, const std::string &text) = 0;
-    [[nodiscard]] std::string convertSecondsToHHMMSS(std::chrono::seconds duration) const;
-    virtual void update(const BoardInfo &boardinfo, bool forced = false) = 0;
+
+    virtual auto begin() -> bool = 0;
+    virtual auto clear() -> void = 0;
+    virtual auto showConnection(bool show) -> void = 0;
+    virtual auto showPower(bool show) -> void = 0;
+    virtual auto setRow(uint8_t row, const std::string &text) -> void = 0;
+    virtual auto update(const BoardInfo &boardinfo, bool forced = false) -> void = 0;
+
+    [[nodiscard]] auto convertSecondsToHHMMSS(std::chrono::seconds duration) const -> std::string;
   };
 } // namespace fablabbg
 

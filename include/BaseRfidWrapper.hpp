@@ -10,13 +10,16 @@ namespace fablabbg
   {
   public:
     virtual ~BaseRFIDWrapper() = default;
-    virtual bool init_rfid() const = 0;
-    [[nodiscard]] virtual bool isNewCardPresent() const = 0;
-    [[nodiscard]] virtual bool cardStillThere(const card::uid_t original, std::chrono::milliseconds delay) const = 0;
-    virtual std::optional<card::uid_t> readCardSerial() const = 0;
-    virtual bool selfTest() const = 0;
-    virtual void reset() const = 0;
-    [[nodiscard]] virtual card::uid_t getUid() const = 0;
+    virtual auto init_rfid() const -> bool = 0;
+
+    [[nodiscard]] virtual auto isNewCardPresent() const -> bool = 0;
+    [[nodiscard]] virtual auto cardStillThere(const card::uid_t original,
+                                              std::chrono::milliseconds delay) const -> bool = 0;
+    [[nodiscard]] virtual auto getUid() const -> card::uid_t = 0;
+
+    virtual auto readCardSerial() const -> std::optional<card::uid_t> = 0;
+    virtual auto selfTest() const -> bool = 0;
+    virtual auto reset() const -> void = 0;
   };
 } // namespace fablabbg
 #endif // BASERFIDWRAPPER_HPP_

@@ -52,13 +52,14 @@ namespace fablabbg
                                                        relay_config{relay.ch1_pin, relay.active_low},
                                                        mqtt_config{topic}, autologoff(autologoff),
                                                        grace_period{grace_period} {};
-    std::string toString() const;
+                                                       
+    [[nodiscard]] auto toString() const -> std::string;
 
     /// @brief Indicates if the machine is controller by hard-wired relay
-    [[nodiscard]] bool hasRelay() const;
+    [[nodiscard]] auto hasRelay() const -> bool;
 
     /// @brief Indicates if the machine is controller by MQTT switch (Shelly)
-    [[nodiscard]] bool hasMqttSwitch() const;
+    [[nodiscard]] auto hasMqttSwitch() const -> bool;
 
     MachineConfig() = delete;
     MachineConfig(const MachineConfig &) = default;             // copy constructor

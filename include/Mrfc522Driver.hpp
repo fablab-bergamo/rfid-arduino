@@ -29,15 +29,15 @@ namespace fablabbg
     };
 
     Mrfc522Driver();
-    bool PICC_IsNewCardPresent();
-    bool PICC_ReadCardSerial();
-    void reset();
-    bool PCD_Init();
-    bool PICC_WakeupA(byte *bufferATQA, byte bufferSize);
-    bool PCD_PerformSelfTest();
-    UidDriver getDriverUid() const;
-    void PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain);
-    void PCD_DumpVersionToSerial();
+    auto PICC_IsNewCardPresent() -> bool;
+    auto PICC_ReadCardSerial() -> bool;
+    auto reset() -> void;
+    auto PCD_Init() -> bool;
+    auto PICC_WakeupA(byte *bufferATQA, byte bufferSize) -> bool;
+    auto PCD_PerformSelfTest() -> bool;
+    auto getDriverUid() const -> UidDriver;
+    auto PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain) -> void;
+    auto PCD_DumpVersionToSerial() -> void;
 
     static constexpr auto RxGainMax = MFRC522::PCD_RxGain::RxGain_max;
   };

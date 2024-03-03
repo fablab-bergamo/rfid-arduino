@@ -39,11 +39,13 @@ namespace fablabbg
                                holder_name(name),
                                authenticated(auth),
                                user_level(level) {}
-    bool operator==(const FabUser &t) const
+
+    auto operator==(const FabUser &t) const -> bool
     {
       return card_uid == t.card_uid;
     }
-    std::string toString() const
+
+    auto toString() const -> std::string
     {
       std::stringstream sstream{};
 

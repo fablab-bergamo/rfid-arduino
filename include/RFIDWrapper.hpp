@@ -22,27 +22,27 @@ namespace fablabbg
     RFIDWrapper();
 
     /// @brief Initializes the RFID driver
-    [[nodiscard]] bool init_rfid() const override;
+    [[nodiscard]] auto init_rfid() const -> bool override;
 
     /// @brief Returns true if a card is present in the field
-    [[nodiscard]] bool isNewCardPresent() const override;
+    [[nodiscard]] auto isNewCardPresent() const -> bool override;
 
     /// @brief Returns true if the card is in the field, waiting up to max_delay to confirm presence
     /// @details This function may return immediately if the card responds quickly
     /// @param original card to look for
     /// @param max_delay maximum delay to contact the card
     /// @return true if the card is found
-    [[nodiscard]] bool cardStillThere(const card::uid_t original, std::chrono::milliseconds max_delay) const override;
+    [[nodiscard]] auto cardStillThere(const card::uid_t original, std::chrono::milliseconds max_delay) const -> bool override;
 
     /// @brief Reads the card serial number
     /// @return std::nullopt if the card is not present, the card serial otherwise
-    [[nodiscard]] std::optional<card::uid_t> readCardSerial() const override;
+    [[nodiscard]] auto readCardSerial() const -> std::optional<card::uid_t> override;
 
-    [[nodiscard]] bool selfTest() const override;
+    [[nodiscard]] auto selfTest() const -> bool override;
 
-    void reset() const override;
+    auto reset() const -> void override;
 
-    [[nodiscard]] card::uid_t getUid() const override;
+    [[nodiscard]] auto getUid() const -> card::uid_t override;
 
     /// @brief Returns the driver object for testing/simulation
     Driver &getDriver();

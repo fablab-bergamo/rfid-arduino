@@ -57,7 +57,7 @@ namespace fablabbg
   /// @brief Log the given user onto the machine, if free and not blocked
   /// @param user user to login
   /// @return true of the user has been successfully logged in
-  bool Machine::login(FabUser user)
+  auto Machine::login(const FabUser &user) -> bool
   {
     CHECK_CONFIGURED(bool);
     if (isFree() && allowed)
@@ -129,7 +129,7 @@ namespace fablabbg
 
   /// @brief sets the machine power to on (true) or off (false)
   /// @param value setpoint
-  void Machine::power_relay(bool value)
+  auto Machine::power_relay(bool value) -> void
   {
     CHECK_CONFIGURED(void);
     ESP_LOGI(TAG, "Machine::power_relay : power set to %d", value);
@@ -158,7 +158,7 @@ namespace fablabbg
 
   /// @brief sets the machine power to on (true) or off (false)
   /// @param value setpoint
-  void Machine::power_mqtt(bool value)
+  auto Machine::power_mqtt(bool value) -> void
   {
     CHECK_CONFIGURED(void);
 

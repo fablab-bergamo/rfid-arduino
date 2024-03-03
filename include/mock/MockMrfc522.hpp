@@ -29,13 +29,13 @@ namespace fablabbg
 
     constexpr MockMrfc522(){};
 
-    bool PICC_IsNewCardPresent();
-    bool PICC_ReadCardSerial();
+    auto PICC_IsNewCardPresent() -> bool;
+    auto PICC_ReadCardSerial() -> bool;
     void reset();
-    bool PCD_Init();
-    bool PICC_WakeupA(byte *bufferATQA, byte &bufferSize);
-    bool PCD_PerformSelfTest();
-    MockMrfc522::UidDriver getDriverUid() const;
+    auto PCD_Init() -> bool;
+    auto PICC_WakeupA(byte *bufferATQA, byte &bufferSize) -> bool;
+    auto PCD_PerformSelfTest() -> bool;
+    auto getDriverUid() const -> MockMrfc522::UidDriver;
     void PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain);
     void PCD_DumpVersionToSerial();
 
