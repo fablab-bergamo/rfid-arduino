@@ -192,7 +192,7 @@ namespace fablabbg
 
   /// @brief Connects to the WiFi network
   /// @return true if the connection succeeded
-  bool FabBackend::connectWiFi() noexcept
+  bool FabBackend::connectWiFi()
   {
     static constexpr auto NB_TRIES = 30;
     static constexpr auto DELAY_MS = 100ms;

@@ -69,7 +69,7 @@ namespace fablabbg
 
     [[nodiscard]] auto isOnline() const -> bool;
     auto connect() -> bool;
-    auto connectWiFi() noexcept -> bool;
+    auto connectWiFi() -> bool;
     auto loop() -> bool;
 
     void configure(const SavedConfig &config); // Must be called before using the server

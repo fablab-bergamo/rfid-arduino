@@ -14,7 +14,7 @@ namespace fablabbg
   class MockMQTTBroker final : public sMQTTBroker
   {
   public:
-    MockMQTTBroker() noexcept : isLocked{false} {};
+    MockMQTTBroker() : isLocked{false} {};
     ~MockMQTTBroker() = default;
 
     auto isRunning() const -> bool;

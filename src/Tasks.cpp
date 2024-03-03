@@ -14,7 +14,7 @@ namespace fablabbg::Tasks
   using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
   using namespace std::chrono_literals;
 
-  Scheduler::Scheduler() noexcept : tasks{}
+  Scheduler::Scheduler() : tasks{}
   {
   }
 
