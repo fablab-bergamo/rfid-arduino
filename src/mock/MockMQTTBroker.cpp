@@ -5,7 +5,7 @@
 static const char *const TAG2 = "MockMQTTBroker";
 namespace fablabbg
 {
-  void MockMQTTBroker::start()
+  auto MockMQTTBroker::start() -> void
   {
     while (WiFi.status() != WL_CONNECTED)
     { // Wait for the Wi-Fi to connect
@@ -20,7 +20,8 @@ namespace fablabbg
       ESP_LOGI(TAG2, "MQTT BROKER: started with result %d", is_running.load());
     }
   }
-  bool MockMQTTBroker::onEvent(sMQTTEvent *event)
+
+  auto MockMQTTBroker::onEvent(sMQTTEvent *event) -> bool
   {
     switch (event->Type())
     {
@@ -59,14 +60,14 @@ namespace fablabbg
     return true;
   }
 
-  bool MockMQTTBroker::isRunning() const
+  auto MockMQTTBroker::isRunning() const -> bool
   {
     return is_running;
   }
 
   /// @brief Returns a fake server reply for testing purposes
   /// @return json payload
-  const std::string MockMQTTBroker::defaultReplies(const std::string &query) const
+  auto MockMQTTBroker::defaultReplies(const std::string &query) const -> const std::string
   {
     if (query.find("checkmachine") != std::string::npos)
     {
@@ -102,7 +103,7 @@ namespace fablabbg
     return std::string{"{\"request_ok\":true}"};
   }
 
-  void MockMQTTBroker::configureReplies(std::function<const std::string(const std::string &, const std::string &)> callback)
+  auto MockMQTTBroker::configureReplies(std::function<const std::string(const std::string &, const std::string &)> callback) -> void
   {
     while (true)
     {
@@ -115,7 +116,7 @@ namespace fablabbg
     }
   }
 
-  size_t MockMQTTBroker::processQueries()
+  auto MockMQTTBroker::processQueries() -> size_t
   {
     if (!queries.empty())
     {

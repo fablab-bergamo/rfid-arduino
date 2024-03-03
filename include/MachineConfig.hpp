@@ -53,7 +53,7 @@ namespace fablabbg
                                                        mqtt_config{topic}, autologoff(autologoff),
                                                        grace_period{grace_period} {};
                                                        
-    [[nodiscard]] auto toString() const -> std::string;
+    [[nodiscard]] auto toString() const -> const std::string;
 
     /// @brief Indicates if the machine is controller by hard-wired relay
     [[nodiscard]] auto hasRelay() const -> bool;

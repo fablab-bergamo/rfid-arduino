@@ -10,7 +10,7 @@
 
 namespace fablabbg
 {
-  SavedConfig SavedConfig::DefaultConfig()
+  auto SavedConfig::DefaultConfig() -> SavedConfig
   {
     SavedConfig config;
 
@@ -34,7 +34,7 @@ namespace fablabbg
     return config;
   }
 
-  std::optional<SavedConfig> SavedConfig::LoadFromEEPROM()
+  auto SavedConfig::LoadFromEEPROM() -> std::optional<SavedConfig>
   {
     SavedConfig config;
 
@@ -53,7 +53,7 @@ namespace fablabbg
     return config;
   }
 
-  bool SavedConfig::SaveToEEPROM() const
+  auto SavedConfig::SaveToEEPROM() const -> bool
   {
     if (!EEPROM.begin(sizeof(SavedConfig)))
     {
@@ -76,7 +76,7 @@ namespace fablabbg
     return false;
   }
 
-  std::string SavedConfig::toString() const
+  auto SavedConfig::toString() const -> const std::string
   {
     DynamicJsonDocument doc(1024);
 

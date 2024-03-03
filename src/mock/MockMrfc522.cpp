@@ -2,7 +2,7 @@
 
 namespace fablabbg
 {
-  MockMrfc522::UidDriver MockMrfc522::getDriverUid() const
+  auto MockMrfc522::getDriverUid() const -> MockMrfc522::UidDriver
   {
     UidDriver retVal{};
     memset(&retVal, 0, sizeof(retVal));
@@ -15,15 +15,15 @@ namespace fablabbg
     return retVal;
   }
 
-  bool MockMrfc522::PICC_IsNewCardPresent() { return getSimulatedUid().has_value(); }
+  auto MockMrfc522::PICC_IsNewCardPresent() -> bool { return getSimulatedUid().has_value(); }
 
-  bool MockMrfc522::PICC_ReadCardSerial() { return getSimulatedUid().has_value(); }
+  auto MockMrfc522::PICC_ReadCardSerial() -> bool { return getSimulatedUid().has_value(); }
 
   void MockMrfc522::reset() { uid = std::nullopt; }
 
-  bool MockMrfc522::PCD_Init() { return true; }
+  auto MockMrfc522::PCD_Init() -> bool { return true; }
 
-  bool MockMrfc522::PICC_WakeupA(byte *bufferATQA, byte &bufferSize)
+  auto MockMrfc522::PICC_WakeupA(byte *bufferATQA, byte &bufferSize) -> bool
   {
     if (getSimulatedUid().has_value())
     {
@@ -32,13 +32,13 @@ namespace fablabbg
     return false;
   }
 
-  bool MockMrfc522::PCD_PerformSelfTest() { return true; }
+  auto MockMrfc522::PCD_PerformSelfTest() -> bool { return true; }
 
-  void MockMrfc522::PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain) {}
+  auto MockMrfc522::PCD_SetAntennaGain(MFRC522Constants::PCD_RxGain gain) -> void {}
 
-  void MockMrfc522::PCD_DumpVersionToSerial() {}
+  auto MockMrfc522::PCD_DumpVersionToSerial() -> void {}
 
-  void MockMrfc522::setUid(const std::optional<card::uid_t> &uid, const std::optional<std::chrono::milliseconds> &max_delay)
+  auto MockMrfc522::setUid(const std::optional<card::uid_t> &uid, const std::optional<std::chrono::milliseconds> &max_delay) -> void
   {
     this->uid = uid;
     if (max_delay.has_value())
@@ -51,13 +51,13 @@ namespace fablabbg
     }
   }
 
-  void MockMrfc522::resetUid()
+  auto MockMrfc522::resetUid() -> void
   {
     uid = std::nullopt;
     stop_uid_simulate_time = std::nullopt;
   }
 
-  std::optional<card::uid_t> MockMrfc522::getSimulatedUid() const
+  auto MockMrfc522::getSimulatedUid() const -> std::optional<card::uid_t>
   {
     if (stop_uid_simulate_time.has_value() && std::chrono::system_clock::now() > stop_uid_simulate_time.value())
     {

@@ -6,7 +6,7 @@
 
 namespace fablabbg
 {
-  std::string BaseLCDWrapper::convertSecondsToHHMMSS(std::chrono::seconds duration) const
+  auto BaseLCDWrapper::convertSecondsToHHMMSS(std::chrono::seconds duration) const -> const std::string
   {
     //! since something something does not support to_string we have to resort to ye olde cstring stuff
     char buf[9] = {0};

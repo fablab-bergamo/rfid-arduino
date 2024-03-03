@@ -45,7 +45,7 @@ namespace fablabbg
       return card_uid == t.card_uid;
     }
 
-    auto toString() const -> std::string
+    auto toString() const -> const std::string
     {
       std::stringstream sstream{};
 

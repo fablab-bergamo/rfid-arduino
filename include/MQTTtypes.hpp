@@ -14,7 +14,7 @@ namespace fablabbg::ServerMQTT
   class Query
   {
   public:
-    virtual std::string payload() const = 0;
+    virtual auto payload() const -> const std::string = 0;
     virtual ~Query() = default;
   };
 
@@ -26,21 +26,21 @@ namespace fablabbg::ServerMQTT
     UserQuery() = delete;
     constexpr UserQuery(card::uid_t card_uid) : uid(card_uid){};
 
-    [[nodiscard]] auto payload() const -> std::string override;
+    [[nodiscard]] auto payload() const -> const std::string override;
   };
 
   class MachineQuery final : public Query
   {
   public:
     constexpr MachineQuery() = default;
-    [[nodiscard]] auto payload() const -> std::string override;
+    [[nodiscard]] auto payload() const -> const std::string override;
   };
 
   class AliveQuery final : public Query
   {
   public:
     constexpr AliveQuery() = default;
-    [[nodiscard]] auto payload() const -> std::string override;
+    [[nodiscard]] auto payload() const -> const std::string override;
   };
 
   class StartUseQuery final : public Query
@@ -51,7 +51,7 @@ namespace fablabbg::ServerMQTT
     StartUseQuery() = delete;
     constexpr StartUseQuery(card::uid_t card_uid) : uid(card_uid){};
 
-    [[nodiscard]] auto payload() const -> std::string override;
+    [[nodiscard]] auto payload() const -> const std::string override;
   };
 
   class StopUseQuery final : public Query
@@ -67,7 +67,7 @@ namespace fablabbg::ServerMQTT
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
     constexpr StopUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
-    [[nodiscard]] auto payload() const -> std::string override;
+    [[nodiscard]] auto payload() const -> const std::string override;
   };
 
   class InUseQuery final : public Query
@@ -83,7 +83,7 @@ namespace fablabbg::ServerMQTT
     /// @param mid machine id
     /// @param duration duration of usage, in seconds
     constexpr InUseQuery(card::uid_t card_uid, std::chrono::seconds duration) : uid(card_uid), duration_s(duration){};
-    [[nodiscard]] auto payload() const -> std::string override;
+    [[nodiscard]] auto payload() const -> const std::string override;
   };
 
   class RegisterMaintenanceQuery final : public Query
@@ -94,7 +94,7 @@ namespace fablabbg::ServerMQTT
     RegisterMaintenanceQuery() = delete;
     constexpr RegisterMaintenanceQuery(card::uid_t card_uid) : uid(card_uid){};
 
-    [[nodiscard]] auto payload() const -> std::string override;
+    [[nodiscard]] auto payload() const -> const std::string override;
   };
 
   class Response
@@ -130,7 +130,7 @@ namespace fablabbg::ServerMQTT
     [[nodiscard]] static auto fromJson(JsonDocument &doc) -> std::unique_ptr<UserResponse>;
 
     [[nodiscard]] auto getResult() const -> UserResult;
-    [[nodiscard]] auto toString() const -> std::string;
+    [[nodiscard]] auto toString() const -> const std::string;
   };
 
   class MachineResponse final : public Response

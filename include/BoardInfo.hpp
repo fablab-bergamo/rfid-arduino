@@ -11,7 +11,7 @@ namespace fablabbg
     Machine::PowerState power_state;
     bool power_warning;
 
-    bool operator==(const BoardInfo &other) const
+    [[nodiscard]] auto operator==(const BoardInfo &other) const -> bool
     {
       return server_connected == other.server_connected &&
              power_state == other.power_state &&

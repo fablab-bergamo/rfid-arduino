@@ -68,7 +68,7 @@ namespace fablabbg::Tasks
     [[nodiscard]] auto getCallback() const -> std::function<void()>;
 
     /// @brief Get the Task Identifier
-    [[nodiscard]] auto getId() const -> std::string;
+    [[nodiscard]] auto getId() const -> const std::string;
 
     [[nodiscard]] auto getDelay() const -> milliseconds;
 
@@ -101,7 +101,7 @@ namespace fablabbg::Tasks
   class Scheduler
   {
   public:
-    Scheduler();
+    Scheduler() : tasks{} {};
     ~Scheduler() = default;
 
     auto addTask(Task &task) -> void;

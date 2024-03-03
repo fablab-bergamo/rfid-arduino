@@ -50,33 +50,30 @@ namespace fablabbg
 
     BoardLogic() = default;
 
-    auto getStatus() const -> Status;
+    auto refreshFromServer() -> void;
+    auto onNewCard(card::uid_t uid) -> void;
+    auto logout() -> void;
+    auto changeStatus(Status newStatus) -> void;
+    auto updateLCD() const -> void;
+    auto beep_ok() const -> void;
+    auto beep_failed() const -> void;
+    auto blinkLed(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0) -> void;
+    auto checkRfid() -> void;
+    auto checkPowerOff() -> void;
+    auto setAutologoffDelay(std::chrono::seconds delay) -> void;
+    auto setWhitelist(WhiteList whitelist) -> void;
+    auto setRebootRequest(bool request) -> void;
 
-    void refreshFromServer();
-    void onNewCard(card::uid_t uid);
-    void logout();
-    [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
-    void changeStatus(Status newStatus);
     auto board_init() -> bool;
-    void updateLCD() const;
-    void beep_ok() const;
-    void beep_failed() const;
-
     auto configure(BaseRFIDWrapper &rfid, BaseLCDWrapper &lcd) -> bool;
-
-    void blinkLed(uint8_t r = 0, uint8_t g = 0, uint8_t b = 0);
-    void checkRfid();
-    void checkPowerOff();
-    void setAutologoffDelay(std::chrono::seconds delay);
-    void setWhitelist(WhiteList whitelist);
-    [[nodiscard]] auto getServer() -> FabBackend &;
     auto reconfigure() -> bool;
 
+    [[nodiscard]] auto getStatus() const -> Status;
+    [[nodiscard]] auto getRebootRequest() const -> bool;
+    [[nodiscard]] auto getServer() -> FabBackend &;
     [[nodiscard]] auto getMachineForTesting() -> Machine &;
     [[nodiscard]] auto getMachine() const -> const Machine &;
-
-    void setRebootRequest(bool request);
-    auto getRebootRequest() const -> bool;
+    [[nodiscard]] auto authorize(const card::uid_t uid) -> bool;
 
     // copy reference
     BoardLogic &operator=(const BoardLogic &board) = delete;

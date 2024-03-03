@@ -430,7 +430,7 @@ namespace fablabbg
 
   /// @brief Gets the current board status
   /// @return board status
-  BoardLogic::Status BoardLogic::getStatus() const
+  auto BoardLogic::getStatus() const -> BoardLogic::Status
   {
     return status;
   }

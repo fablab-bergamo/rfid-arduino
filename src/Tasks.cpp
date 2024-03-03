@@ -14,16 +14,12 @@ namespace fablabbg::Tasks
   using time_point_sc = std::chrono::time_point<std::chrono::system_clock>;
   using namespace std::chrono_literals;
 
-  Scheduler::Scheduler() : tasks{}
-  {
-  }
-
-  void Scheduler::addTask(Task &task)
+  auto Scheduler::addTask(Task &task) -> void
   {
     tasks.push_back(task);
   }
 
-  void Scheduler::removeTask(Task &task)
+  auto Scheduler::removeTask(Task &task) -> void
   {
     tasks.erase(std::remove_if(tasks.begin(), tasks.end(),
                                [&task](const auto &t)
@@ -31,14 +27,15 @@ namespace fablabbg::Tasks
                 tasks.end());
   }
 
-  void Scheduler::restart() const
+  auto Scheduler::restart() const -> void
   {
     for (const auto &task : tasks)
     {
       task.get().restart();
     }
   }
-  void Scheduler::printStats() const
+
+  auto Scheduler::printStats() const -> void
   {
     milliseconds avg_delay = 0ms;
     auto nb_runs = 0;
@@ -81,7 +78,7 @@ namespace fablabbg::Tasks
     }
   }
 
-  void Scheduler::execute() const
+  auto Scheduler::execute() const -> void
   {
     // Tasks shall be run in order of expiration (the most expired task shall run first)
     std::vector<decltype(tasks)::const_iterator> iters{};
@@ -115,12 +112,12 @@ namespace fablabbg::Tasks
 #endif
   }
 
-  size_t Scheduler::taskCount() const
+  auto Scheduler::taskCount() const -> size_t
   {
     return tasks.size();
   }
 
-  const std::vector<std::reference_wrapper<Task>> Scheduler::getTasks() const
+  auto Scheduler::getTasks() const -> const std::vector<std::reference_wrapper<Task>>
   {
     return {tasks};
   }
@@ -144,7 +141,7 @@ namespace fablabbg::Tasks
     scheduler.addTask(std::ref(*this));
   }
 
-  void Task::run()
+  auto Task::run() -> void
   {
     if (isActive() && std::chrono::system_clock::now() >= next_run)
     {
@@ -173,55 +170,55 @@ namespace fablabbg::Tasks
     }
   }
 
-  void Task::stop()
+  auto Task::stop() -> void
   {
     active = false;
   }
 
-  void Task::start()
+  auto Task::start() -> void
   {
     active = true;
     restart();
   }
 
   /// @brief recompute the next run time (now + delay)
-  void Task::restart()
+  auto Task::restart() -> void
   {
     last_run = std::chrono::system_clock::now() + delay;
     next_run = last_run;
   }
 
-  void Task::setPeriod(milliseconds new_period)
+  auto Task::setPeriod(milliseconds new_period) -> void
   {
     period = new_period;
   }
 
-  void Task::setCallback(std::function<void()> new_callback)
+  auto Task::setCallback(std::function<void()> new_callback) -> void
   {
     callback = new_callback;
   }
 
-  bool Task::isActive() const
+  auto Task::isActive() const -> bool
   {
     return active;
   }
 
-  std::chrono::milliseconds Task::getPeriod() const
+  auto Task::getPeriod() const -> std::chrono::milliseconds
   {
     return period;
   }
 
-  std::function<void()> Task::getCallback() const
+  auto Task::getCallback() const -> std::function<void()>
   {
     return callback;
   }
 
-  std::string Task::getId() const
+  auto Task::getId() const -> const std::string
   {
     return id;
   }
 
-  std::chrono::milliseconds Task::getAvgTardiness() const
+  auto Task::getAvgTardiness() const -> std::chrono::milliseconds
   {
     if (average_tardiness > period)
     {
@@ -230,34 +227,34 @@ namespace fablabbg::Tasks
     return 0ms;
   }
 
-  unsigned long Task::getRunCounter() const
+  auto Task::getRunCounter() const -> unsigned long
   {
     return run_counter;
   }
 
-  std::chrono::milliseconds Task::getDelay() const
+  auto Task::getDelay() const -> std::chrono::milliseconds
   {
     return delay;
   }
 
-  void Task::setDelay(std::chrono::milliseconds new_delay)
+  auto Task::setDelay(std::chrono::milliseconds new_delay) -> void
   {
     delay = new_delay;
   }
 
-  std::chrono::milliseconds Task::getTotalRuntime() const
+  auto Task::getTotalRuntime() const -> std::chrono::milliseconds
   {
     return total_runtime;
   }
 
-  std::chrono::time_point<std::chrono::system_clock> Task::getNextRun() const
+  auto Task::getNextRun() const -> std::chrono::time_point<std::chrono::system_clock>
   {
     return next_run;
   }
 
   /// @brief Wait for a delay, allowing OTA updates
   /// @param delay period to wait (should be > 50 ms)
-  void task_delay(const std::chrono::milliseconds duration)
+  auto task_delay(const std::chrono::milliseconds duration) -> void
   {
     if (duration < 50ms)
     {

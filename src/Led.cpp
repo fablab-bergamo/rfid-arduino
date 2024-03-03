@@ -3,7 +3,7 @@
 
 namespace fablabbg
 {
-  void Led::init()
+  auto Led::init() -> void
   {
     if (initialized || pins.led.pin == NO_PIN)
     {
@@ -31,17 +31,17 @@ namespace fablabbg
     initialized = true;
   }
 
-  void Led::setColor(uint8_t r, uint8_t g, uint8_t b)
+  auto Led::setColor(uint8_t r, uint8_t g, uint8_t b) -> void
   {
     color = {r, g, b};
   }
 
-  void Led::set(Status new_status)
+  auto Led::set(Status new_status) -> void
   {
     this->status = new_status;
   }
 
-  void Led::outputColor(uint8_t r, uint8_t g, uint8_t b)
+  auto Led::outputColor(uint8_t r, uint8_t g, uint8_t b) -> void
   {
     if constexpr (pins.led.is_neopixel)
     {
@@ -61,7 +61,7 @@ namespace fablabbg
     }
   }
 
-  void Led::update()
+  auto Led::update() -> void
   {
     init();
 

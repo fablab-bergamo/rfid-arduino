@@ -19,7 +19,7 @@ namespace fablabbg
   /// @brief Checks if the cache contains the card ID, and uses that if available
   /// @param uid card id
   /// @return FabUser if found
-  std::optional<FabUser> AuthProvider::is_in_cache(card::uid_t uid) const
+  auto AuthProvider::is_in_cache(card::uid_t uid) const -> std::optional<FabUser>
   {
     auto elem = std::find_if(cache.begin(), cache.end(),
                              [uid](const auto &input)
@@ -58,7 +58,7 @@ namespace fablabbg
   /// @param uid card ID
   /// @param out a FabUser with an authenticated flag==true if server or whitelist confirmed the ID
   /// @return false if the user was not found on server or whitelist
-  std::optional<FabUser> AuthProvider::tryLogin(card::uid_t uid, FabBackend &server) const
+  auto AuthProvider::tryLogin(card::uid_t uid, FabBackend &server) const -> std::optional<FabUser>
   {
     FabUser user;
     using UserResult = ServerMQTT::UserResult;
@@ -115,7 +115,7 @@ namespace fablabbg
   /// @brief Checks if the card ID is whitelisted
   /// @param uid card ID
   /// @return a whitelistentry object if the card is found in whitelist
-  std::optional<WhiteListEntry> AuthProvider::WhiteListLookup(card::uid_t candidate_uid) const
+  auto AuthProvider::WhiteListLookup(card::uid_t candidate_uid) const -> std::optional<WhiteListEntry>
   {
     auto elem = std::find_if(whitelist.begin(), whitelist.end(),
                              [candidate_uid](const auto &input)
@@ -135,7 +135,7 @@ namespace fablabbg
 
   /// @brief Sets the whitelist
   /// @param list the whitelist to set
-  void AuthProvider::setWhitelist(WhiteList list)
+  auto AuthProvider::setWhitelist(WhiteList list) -> void
   {
     whitelist = list;
     cache.clear();

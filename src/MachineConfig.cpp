@@ -3,7 +3,7 @@
 
 namespace fablabbg
 {
-  std::string MachineConfig::toString() const
+  auto MachineConfig::toString() const -> const std::string
   {
     std::stringstream sstream;
 
@@ -24,12 +24,12 @@ namespace fablabbg
     return sstream.str();
   }
 
-  bool MachineConfig::hasRelay() const
+  auto MachineConfig::hasRelay() const -> bool
   {
     return relay_config.pin != NO_PIN;
   }
 
-  bool MachineConfig::hasMqttSwitch() const
+  auto MachineConfig::hasMqttSwitch() const -> bool
   {
     return !mqtt_config.topic.empty();
   }

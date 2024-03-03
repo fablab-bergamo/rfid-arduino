@@ -22,7 +22,7 @@ namespace fablabbg
     return ret_type();                               \
   }
 
-  void Machine::configure(const MachineConfig &new_config, FabBackend &serv)
+  auto Machine::configure(const MachineConfig &new_config, FabBackend &serv) -> void
   {
     // https://stackoverflow.com/questions/67596731/why-is-stdoptionaltoperator-deleted-when-t-contains-a-const-data-memb
     config.emplace(new_config);
@@ -41,7 +41,7 @@ namespace fablabbg
 
   /// @brief Returns the machine identifier
   /// @return Machine identifier
-  MachineID Machine::getMachineId() const
+  auto Machine::getMachineId() const -> MachineID
   {
     CHECK_CONFIGURED(MachineID);
     return config.value().machine_id;
@@ -49,7 +49,7 @@ namespace fablabbg
 
   /// @brief Indicates whether the machine is used by somebody
   /// @return boolean
-  bool Machine::isFree() const
+  auto Machine::isFree() const -> bool
   {
     return !active;
   }
@@ -73,13 +73,13 @@ namespace fablabbg
 
   /// @brief Returns the current power state of the machine
   /// @return
-  Machine::PowerState Machine::getPowerState() const
+  auto Machine::getPowerState() const -> Machine::PowerState
   {
     return power_state;
   }
 
   /// @brief Removes the user from the machine, and powers off the machine (respecting POWEROFF_DELAY_MINUTES setting)
-  void Machine::logout()
+  auto Machine::logout() -> void
   {
     CHECK_CONFIGURED(void);
     if (active)
@@ -103,7 +103,7 @@ namespace fablabbg
 
   /// @brief indicates if the machine can be powered off
   /// @return true if the delay has expired
-  bool Machine::canPowerOff() const
+  auto Machine::canPowerOff() const -> bool
   {
     if (!logoff_timestamp.has_value())
       return false;
@@ -116,7 +116,7 @@ namespace fablabbg
 
   /// @brief indicates if the machine is about to shudown and board should beep
   /// @return true if shutdown is imminent
-  bool Machine::isShutdownImminent() const
+  auto Machine::isShutdownImminent() const -> bool
   {
     if (!logoff_timestamp.has_value() || conf::machine::BEEP_PERIOD == 0ms)
       return false;
@@ -196,7 +196,7 @@ namespace fablabbg
     }
   }
 
-  void Machine::power(bool on_or_off)
+  auto Machine::power(bool on_or_off) -> void
   {
     CHECK_CONFIGURED(void);
 
@@ -212,14 +212,14 @@ namespace fablabbg
     }
   }
 
-  FabUser Machine::getActiveUser() const
+  auto Machine::getActiveUser() const -> FabUser
   {
     return current_user;
   }
 
   /// @brief Gets the duration the machine has been used
   /// @return milliseconds since the machine has been started
-  std::chrono::seconds Machine::getUsageDuration() const
+  auto Machine::getUsageDuration() const -> std::chrono::seconds
   {
     if (usage_start_timestamp.has_value())
     {
@@ -228,13 +228,13 @@ namespace fablabbg
     return 0s;
   }
 
-  std::string Machine::getMachineName() const
+  auto Machine::getMachineName() const -> const std::string
   {
     CHECK_CONFIGURED(std::string);
     return std::string{config.value().machine_name.data()};
   }
 
-  std::string Machine::toString() const
+  auto Machine::toString() const -> const std::string
   {
     std::stringstream sstream{};
 
@@ -262,13 +262,13 @@ namespace fablabbg
     return sstream.str();
   }
 
-  std::chrono::seconds Machine::getAutologoffDelay() const
+  auto Machine::getAutologoffDelay() const -> std::chrono::seconds
   {
     CHECK_CONFIGURED(std::chrono::seconds);
     return config.value().autologoff;
   }
 
-  void Machine::setAutologoffDelay(std::chrono::seconds new_delay)
+  auto Machine::setAutologoffDelay(std::chrono::seconds new_delay) -> void
   {
     CHECK_CONFIGURED(void);
 
@@ -281,13 +281,13 @@ namespace fablabbg
     config.value().autologoff = new_delay;
   }
 
-  bool Machine::isAutologoffExpired() const
+  auto Machine::isAutologoffExpired() const -> bool
   {
     return getAutologoffDelay() > 0min &&
            getUsageDuration() > getAutologoffDelay();
   }
 
-  void Machine::setMachineName(const std::string &new_name)
+  auto Machine::setMachineName(const std::string &new_name) -> void
   {
     CHECK_CONFIGURED(void);
 
@@ -299,7 +299,7 @@ namespace fablabbg
     config.value().machine_name = new_name;
   }
 
-  void Machine::setMachineType(MachineType new_type)
+  auto Machine::setMachineType(MachineType new_type) -> void
   {
     CHECK_CONFIGURED(void);
 
@@ -309,43 +309,43 @@ namespace fablabbg
     config.value().machine_type = new_type;
   }
 
-  bool Machine::isConfigured() const
+  auto Machine::isConfigured() const -> bool
   {
     return config.has_value() && server.has_value();
   }
 
-  std::optional<MachineConfig> Machine::getConfig() const
+  auto Machine::getConfig() const -> std::optional<MachineConfig>
   {
     return config;
   }
 
-  bool Machine::isAllowed() const
+  auto Machine::isAllowed() const -> bool
   {
     return allowed;
   }
 
-  void Machine::setAllowed(bool new_allowed)
+  auto Machine::setAllowed(bool new_allowed) -> void
   {
     allowed = new_allowed;
   }
 
-  bool Machine::isMaintenanceNeeded() const
+  auto Machine::isMaintenanceNeeded() const -> bool
   {
     return maintenanceNeeded;
   }
 
-  void Machine::setMaintenanceNeeded(bool new_maintenance_needed)
+  auto Machine::setMaintenanceNeeded(bool new_maintenance_needed) -> void
   {
     maintenanceNeeded = new_maintenance_needed;
   }
 
-  std::chrono::seconds Machine::getGracePeriod() const
+  auto Machine::getGracePeriod() const -> std::chrono::seconds
   {
     CHECK_CONFIGURED(std::chrono::seconds);
     return config.value().grace_period;
   }
 
-  void Machine::setGracePeriod(std::chrono::seconds new_delay)
+  auto Machine::setGracePeriod(std::chrono::seconds new_delay) -> void
   {
     CHECK_CONFIGURED(void);
 

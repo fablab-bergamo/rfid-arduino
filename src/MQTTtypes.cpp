@@ -16,7 +16,7 @@
 
 namespace fablabbg::ServerMQTT
 {
-  std::string UserQuery::payload() const
+  auto UserQuery::payload() const -> const std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"checkuser\","
@@ -25,7 +25,7 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
-  std::string MachineQuery::payload() const
+  auto MachineQuery::payload() const -> const std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"checkmachine\""
@@ -33,7 +33,7 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
-  std::string AliveQuery::payload() const
+  auto AliveQuery::payload() const -> const std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"alive\","
@@ -43,7 +43,7 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
-  std::string StartUseQuery::payload() const
+  auto StartUseQuery::payload() const -> const std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"startuse\", "
@@ -52,7 +52,7 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
-  std::string StopUseQuery::payload() const
+  auto StopUseQuery::payload() const -> const std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"stopuse\", "
@@ -62,7 +62,7 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
-  std::string InUseQuery::payload() const
+  auto InUseQuery::payload() const -> const std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"inuse\", "
@@ -72,7 +72,7 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
-  std::string RegisterMaintenanceQuery::payload() const
+  auto RegisterMaintenanceQuery::payload() const -> const std::string
   {
     std::stringstream ss{};
     ss << "{\"action\":\"maintenance\", "
@@ -81,11 +81,12 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
-  UserResult UserResponse::getResult() const
+  auto UserResponse::getResult() const -> UserResult
   {
     return static_cast<UserResult>(result);
   }
-  std::unique_ptr<UserResponse> UserResponse::fromJson(JsonDocument &doc)
+
+  auto UserResponse::fromJson(JsonDocument &doc) -> std::unique_ptr<UserResponse>
   {
     auto response = std::make_unique<UserResponse>(doc["request_ok"].as<bool>());
     response->result = doc["is_valid"];
@@ -95,7 +96,7 @@ namespace fablabbg::ServerMQTT
     return response;
   }
 
-  std::string UserResponse::toString() const
+  auto UserResponse::toString() const -> const std::string
   {
     std::stringstream ss{};
     ss << "UserResponse: "
@@ -106,7 +107,7 @@ namespace fablabbg::ServerMQTT
     return ss.str();
   }
 
-  std::unique_ptr<MachineResponse> MachineResponse::fromJson(JsonDocument &doc)
+  auto MachineResponse::fromJson(JsonDocument &doc) -> std::unique_ptr<MachineResponse>
   {
     auto response = std::make_unique<MachineResponse>(doc["request_ok"].as<bool>());
     response->is_valid = doc["is_valid"];
@@ -127,7 +128,7 @@ namespace fablabbg::ServerMQTT
     return response;
   }
 
-  std::unique_ptr<SimpleResponse> SimpleResponse::fromJson(JsonDocument &doc)
+  auto SimpleResponse::fromJson(JsonDocument &doc) -> std::unique_ptr<SimpleResponse>
   {
     auto response = std::make_unique<SimpleResponse>(doc["request_ok"].as<bool>());
     return response;

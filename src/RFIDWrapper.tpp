@@ -28,7 +28,7 @@ namespace fablabbg
   /// @brief tries to read the card serial number
   /// @return true if successfull, result can be read with getUid()
   template <typename Driver>
-  std::optional<card::uid_t> RFIDWrapper<Driver>::readCardSerial() const
+  auto RFIDWrapper<Driver>::readCardSerial() const -> std::optional<card::uid_t>
   {
     auto result = driver->PICC_ReadCardSerial();
     if (result)
@@ -44,7 +44,7 @@ namespace fablabbg
   /// @brief indicates if the card is still present in the RFID chip antenna area
   /// @param original the card ID to check
   template <typename Driver>
-  bool RFIDWrapper<Driver>::cardStillThere(const card::uid_t original, std::chrono::milliseconds max_delay) const
+  auto RFIDWrapper<Driver>::cardStillThere(const card::uid_t original, std::chrono::milliseconds max_delay) const -> bool
   {
     auto start = std::chrono::system_clock::now();
     do
@@ -67,7 +67,7 @@ namespace fablabbg
   /// @brief Performs a RFID chip self test
   /// @return true if successfull
   template <typename Driver>
-  bool RFIDWrapper<Driver>::selfTest() const
+  auto RFIDWrapper<Driver>::selfTest() const -> bool
   {
     auto result = driver->PCD_PerformSelfTest();
     if (conf::debug::ENABLE_LOGS)
@@ -79,7 +79,7 @@ namespace fablabbg
 
   /// @brief Performs a chip reset
   template <typename Driver>
-  void RFIDWrapper<Driver>::reset() const
+  auto RFIDWrapper<Driver>::reset() const -> void
   {
     digitalWrite(pins.mfrc522.reset_pin, HIGH);
     delay(15);
@@ -90,7 +90,7 @@ namespace fablabbg
   /// @brief Transforms the RFID acquired bytes into a uid_id object
   /// @return card ID
   template <typename Driver>
-  card::uid_t RFIDWrapper<Driver>::getUid() const
+  auto RFIDWrapper<Driver>::getUid() const -> card::uid_t
   {
     std::array<uint8_t, conf::rfid_tags::UID_BYTE_LEN> arr{0};
     auto const &uid = driver->getDriverUid();
@@ -103,7 +103,7 @@ namespace fablabbg
 
   /// @brief Initializes RFID chip including self test
   template <typename Driver>
-  bool RFIDWrapper<Driver>::init_rfid() const
+  auto RFIDWrapper<Driver>::init_rfid() const -> bool
   {
 
     ESP_LOGI(TAG, "Configuring SPI RFID (SCK=%d, MISO=%d, MOSI=%d, SDA=%d) RESET=%d",
@@ -133,7 +133,7 @@ namespace fablabbg
   }
 
   template <typename Driver>
-  Driver &RFIDWrapper<Driver>::getDriver()
+  auto RFIDWrapper<Driver>::getDriver() -> Driver &
   {
     return *driver.get();
   }
